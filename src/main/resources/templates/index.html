@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForkNow - Home Food Delivery</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FD9B3A;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            background-image: url('/img/ForkNow_logo.png');
+            background-size: contain;
+        }
+
+        nav a {
+            color: #FFF;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        nav .btn-logout {
+            color: #FFF;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #333;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px 0;
+        }
+
+        .hero-text {
+            flex: 1;
+            padding-right: 50px;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            color: #FFF;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #FFF;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background-color: #333;
+            color: #FFF;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            font-weight: 600;
+        }
+
+        .cta-button:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: right;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+        }
+
+        .features {
+            background-color: #FFF;
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .features h2 {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature {
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature i {
+            font-size: 3rem;
+            color: #FFA500;
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        footer {
+            background-color: #333;
+            color: #FFF;
+            text-align: center;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body th:object="${userLoggedIn}">
+    <div class="container">
+        <header>
+            <a href="/">
+                <div class="logo"></div>
+            </a>
+            <nav>
+                <div th:if="${userLoggedIn == null}">
+                    <a href="/login">Login/Register</a>
+                </div>
+                <div th:if="${userLoggedIn != null}">
+                    <a class="btn-logout" href="/logout">Log Out</a>
+                </div>
+                <div th:if="${userLoggedIn != null}">
+                    <a class="btn-profile" th:href="@{/profile/{name}(name=${userLoggedIn.username})}">Profile</a>
+                </div>
+
+            </nav>
+        </header>
+
+        <section class="hero" id="home">
+            <div class="hero-text">
+                <h1 th:if="${userLoggedIn != null}">Hello <span th:text="*{firstName}"> User </span></h1>
+                <h1>Delicious Food, Delivered to You</h1>
+                <p>Order your favorite meals and have them delivered right to your doorstep with ForkNow.</p>
+                <a href="/restaurants"><button class="cta-button">Order Now</button></a>
+                <div th:if="${userLoggedIn != null && userLoggedIn.role.equals(T(fr.simplon.ForkNow.model.Role).OWNER) && isOwner == false}" class="my-4">
+                <p>Dreaming of becoming the next Gordon Ramsay, Philippe Etchebest</p>
+                <a href="/restaurants/create"><button class="cta-button">Create your Restaurant</button></a>
+                </div>
+                <a href="/ownerpanel" th:if="${userLoggedIn != null && userLoggedIn.role.equals(T(fr.simplon.ForkNow.model.Role).OWNER) && isOwner == true}"><button class="cta-button">Owner Panel</button></a>
+            </div>
+            <div class="hero-image">
+                <img src="../static/img/ForkNow_hero.png" th:src="@{/img/ForkNow_hero.png}" alt="Happy delivery person with food">
+            </div>
+        </section>
+    </div>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Why Choose ForkNow?</h2>
+            <div class="feature-grid">
+                <div class="feature">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Wide Selection</h3>
+                    <p>Choose from a vast array of local restaurants and cuisines.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Fast Delivery</h3>
+
+                    <p>Get your food delivered quickly and efficiently to your doorstep.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Easy to Use</h3>
+                    <p>Our user-friendly app makes ordering food a breeze.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 ForkNow. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

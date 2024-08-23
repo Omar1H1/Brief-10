@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+            name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Thymeleaf</title>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css"
+          rel="stylesheet">
+    <style>
+        .btn-primary {
+            background-color: #FFA500;
+            border-color: #FFA500;
+        }
+    </style>
+</head>
+<body class="container">
+<h1 class="py-5">Create User</h1>
+<form class="col card p-3 mb-5" method="post"
+      th:action="@{/signup}" th:object="${userInfo}">
+    <div class="form-group">
+        <label for="username">User Name</label>
+        <input class="form-control" id="username" placeholder="Enter Your User Name" required
+               th:field="*{username}"
+               type="text"/>
+    </div>
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input class="form-control" id="firstName" placeholder="Enter First Name" required
+               th:field="*{firstName}"
+               type="text"/>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input class="form-control" id="lastName" placeholder="Enter Last Name" required
+               th:field="*{lastName}"
+               type="text"/>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-control" id="email" placeholder="Enter your email" required
+               th:field="*{email}"
+               type="email"/>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input class="form-control" id="password" placeholder="Enter your password" required
+               th:field="*{password}"
+               type="password"/>
+    </div>
+
+    <div class="form-group">
+        <label for="photo">Link to your profile picture</label>
+        <input class="form-control" id="photo" placeholder="paste the link to your profile picture" required
+               th:field="*{profilePicture}"
+               type="text"/>
+    </div>
+
+    <div class="form-group">
+        <label for="role">Role</label>
+        <select class="form-control " id="role" required th:field="*{role}">
+            <option hidden value="">Select a role</option>
+            <option
+                    th:each="role : ${T(fr.simplon.ForkNow.model.Role).values()}"
+                    th:text="${role}"
+                    th:value="${role}">
+            </option>
+        </select>
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Create User">
+
+
+</form>
+<div class="col text-center">
+    <p>Already a user ?</p>
+    <a class="btn btn-primary m-3 mx-auto" th:href="@{/login}">Login</a>
+</div>
+</body>
+</html>
