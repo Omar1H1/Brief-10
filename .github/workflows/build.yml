@@ -1,0 +1,19 @@
+push:
+
+jobs:
+  build:
+    name: Spring build
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+      - name: Setup Maven
+        uses: actions/setup-maven@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build with Maven
+        run: mvn package
+      - run: ls -lia target/
