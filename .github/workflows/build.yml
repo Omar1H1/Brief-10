@@ -11,10 +11,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
-      - name: Setup Maven
-        uses: actions/setup-maven@v4
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build with Maven
-        run: mvn package
-      - run: ls -lia target/
+        run: mvn --batch-mode --update-snapshots verify
+      - run: ls -lia target
