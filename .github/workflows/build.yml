@@ -1,6 +1,9 @@
 on:
   push:
 
+permissions:
+  contents: write
+
 jobs:
   get-version:
     uses: shiipou/github-actions/.github/workflows/get-version.yml@main
@@ -31,6 +34,13 @@ jobs:
     name: Create Release
     needs: build
     if: ${{ needs.get-version.outputs.will-release }}
-    uses: ./my-release.yml@main
+    uses: shiipou/github-actions/.github/workflows/release.yml.yml@main
     with:
       version: ${{ needs.get-version.outputs.version }}
+
+
+
+
+
+
+
