@@ -31,6 +31,6 @@ jobs:
     name: Create Release
     needs: build
     if: ${{ needs.get-version.outputs.will-release }}
-    uses: ./my-release.yml
+    uses: ./my-release.yml@main
     with:
       version: ${{ needs.get-version.outputs.version }}
