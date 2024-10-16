@@ -31,14 +31,11 @@ jobs:
     name: Create Release
     needs: build
     if: ${{ needs.get-version.outputs.will-release }}
-    uses: shiipou/github-actions/.github/workflows/release.yml.yml@main
+    uses: shiipou/github-actions/.github/workflows/release.yml@main
     with:
       version: ${{ needs.get-version.outputs.version }}
 
 
 
 
-
-
-
-
+      
