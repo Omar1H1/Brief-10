@@ -1,0 +1,13 @@
+name: My Release
+
+on:
+  workflow_call:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    uses: shiipou/github-actions/.github/workflows/release.yml@main
+    with:
+      version: ${{ github.event.inputs.version }}
