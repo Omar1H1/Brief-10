@@ -31,11 +31,6 @@ jobs:
     name: Create Release
     needs: build
     if: ${{ needs.get-version.outputs.will-release }}
-    uses: shiipou/github-actions/.github/workflows/release.yml@main
+    uses: ./my-release.yml
     with:
       version: ${{ needs.get-version.outputs.version }}
-
-
-
-
-      
